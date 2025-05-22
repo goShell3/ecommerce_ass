@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Product Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .download-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+        .download-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        #downloadStatus {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <h1>Download Product Images</h1>
+    <div class="instructions">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Click the "Download Images" button below</li>
+            <li>Your browser will download 8 product images sequentially</li>
+            <li>Move the downloaded images to the <code>assets/images</code> folder of your e-commerce website</li>
+            <li>Make sure to allow downloads in your browser when prompted</li>
+        </ol>
+    </div>
+    <button class="download-btn" id="downloadBtn" onclick="startDownload()">Download Images</button>
+    <div id="downloadStatus">Ready to download images...</div>
+    <p>Note: Downloads will happen one at a time to avoid browser limitations.</p>
+
+    <script src="scripts/download-images.js"></script>
+    <script>
+        const downloadBtn = document.getElementById('downloadBtn');
+        const statusElement = document.getElementById('downloadStatus');
+
+        async function startDownload() {
+            downloadBtn.disabled = true;
+            statusElement.textContent = "Starting download...";
+            statusElement.className = "";
+            
+            try {
+                await downloadAllImages();
+            } catch (error) {
+                statusElement.textContent = `Error: ${error.message}`;
+                statusElement.className = "error";
+            } finally {
+                downloadBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html> 
